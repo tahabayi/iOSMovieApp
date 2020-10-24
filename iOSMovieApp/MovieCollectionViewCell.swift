@@ -11,9 +11,7 @@ import UIKit
 class MovieCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImageView: UIImageView!
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+    @IBOutlet weak var movieStarButton: UIButton!
+    @IBOutlet weak var movieLabel: UILabel!
     
 }

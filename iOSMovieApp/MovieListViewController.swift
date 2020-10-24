@@ -43,13 +43,13 @@ class MovieListViewController: UIViewController {
             moviesCollectionColumnNumber = CGFloat(1)
             moviesCollectionView.reloadData()
             moviesCollectionView.layoutIfNeeded()
-            moviesChangeViewButton.image = UIImage(named: "grid-view")
+            moviesChangeViewButton.image = UIImage(named: "view-grid")
         } else {
             ratio = CGFloat(1.5)
             moviesCollectionColumnNumber = CGFloat(2)
             moviesCollectionView.reloadData()
             moviesCollectionView.layoutIfNeeded()
-            moviesChangeViewButton.image = UIImage(named: "list-view")
+            moviesChangeViewButton.image = UIImage(named: "view-list")
         }
     }
 
