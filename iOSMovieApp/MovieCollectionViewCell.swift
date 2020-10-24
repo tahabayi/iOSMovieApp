@@ -11,7 +11,7 @@ import UIKit
 class MovieCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImageView: UIImageView!
-    @IBOutlet weak var movieStarButton: UIButton!
+    @IBOutlet weak var movieFavoriteButton: UIButton!
     @IBOutlet weak var movieLabel: UILabel!
     
 }

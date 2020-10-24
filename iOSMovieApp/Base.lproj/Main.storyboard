@@ -43,23 +43,24 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hy0-No-N3A">
-                                                    <rect key="frame" x="159" y="5" width="36" height="36"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hy0-No-N3A">
+                                                    <rect key="frame" x="154" y="10" width="36" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="36" id="1eB-T0-7yW"/>
                                                         <constraint firstAttribute="height" constant="36" id="S62-pk-FNl"/>
                                                     </constraints>
-                                                    <state key="normal" image="start-empty">
+                                                    <state key="normal" image="star" catalog="system">
                                                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="bold"/>
                                                     </state>
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="hy0-No-N3A" firstAttribute="top" secondItem="ZVP-MM-rZO" secondAttribute="top" constant="5" id="5tO-lQ-PhY"/>
+                                                <constraint firstItem="hy0-No-N3A" firstAttribute="top" secondItem="ZVP-MM-rZO" secondAttribute="top" constant="10" id="5tO-lQ-PhY"/>
                                                 <constraint firstAttribute="trailing" secondItem="tf9-D5-PRe" secondAttribute="trailing" id="A92-y7-mZJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="UmX-27-0u2" secondAttribute="trailing" id="Efz-z4-Qgy"/>
                                                 <constraint firstItem="UmX-27-0u2" firstAttribute="leading" secondItem="ZVP-MM-rZO" secondAttribute="leading" id="Tyz-5x-W4X"/>
-                                                <constraint firstAttribute="trailing" secondItem="hy0-No-N3A" secondAttribute="trailing" constant="5" id="elP-O7-ZiG"/>
+                                                <constraint firstAttribute="trailing" secondItem="hy0-No-N3A" secondAttribute="trailing" constant="10" id="elP-O7-ZiG"/>
                                                 <constraint firstAttribute="bottom" secondItem="tf9-D5-PRe" secondAttribute="bottom" id="euZ-Tt-UQ2"/>
                                                 <constraint firstAttribute="bottom" secondItem="UmX-27-0u2" secondAttribute="bottom" id="h5x-4Z-AdB"/>
                                                 <constraint firstItem="tf9-D5-PRe" firstAttribute="leading" secondItem="ZVP-MM-rZO" secondAttribute="leading" id="hgk-rQ-dsZ"/>
@@ -68,9 +69,9 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="200" height="202"/>
                                         <connections>
+                                            <outlet property="movieFavoriteButton" destination="hy0-No-N3A" id="RRX-5f-FCz"/>
                                             <outlet property="movieImageView" destination="tf9-D5-PRe" id="BFl-op-4gN"/>
                                             <outlet property="movieLabel" destination="UmX-27-0u2" id="tso-gH-Ttk"/>
-                                            <outlet property="movieStarButton" destination="hy0-No-N3A" id="RRX-5f-FCz"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -82,6 +83,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23L-uq-iLB">
                                 <rect key="frame" x="0.0" y="832" width="414" height="30"/>
                                 <state key="normal" title="Load more"/>
+                                <connections>
+                                    <action selector="loadMoreButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hca-bb-jcM"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -106,6 +110,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="loadMoreButton" destination="23L-uq-iLB" id="yu6-C3-G1I"/>
                         <outlet property="moviesChangeViewButton" destination="jAE-JB-Svd" id="MW7-xJ-kN1"/>
                         <outlet property="moviesCollectionView" destination="yzq-zH-OrU" id="Sfg-nf-2Y9"/>
                     </connections>
@@ -132,7 +137,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="start-empty" width="36" height="36"/>
+        <image name="star" catalog="system" width="64" height="58"/>
         <image name="view-grid" width="36" height="36"/>
     </resources>
 </document>

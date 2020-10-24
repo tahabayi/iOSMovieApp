@@ -14,6 +14,7 @@ extension UIImageView {
     
     func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
+        image = UIImage(named: "image-placeholder")
         if let imageFromCache = imageCache.object(forKey: link as NSString) {
             self.image = imageFromCache
             return

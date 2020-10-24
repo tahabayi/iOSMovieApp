@@ -10,6 +10,8 @@
 		E21EF9F425435669004CAEB2 /* MovieCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21EF9F325435669004CAEB2 /* MovieCollectionViewCell.swift */; };
 		E21EF9F8254391F1004CAEB2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21EF9F7254391F1004CAEB2 /* Extensions.swift */; };
 		E21EF9FA25439481004CAEB2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21EF9F925439481004CAEB2 /* Constants.swift */; };
+		E21EF9FC25445F0D004CAEB2 /* Modals.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21EF9FB25445F0D004CAEB2 /* Modals.swift */; };
+		E21EFA0225449D37004CAEB2 /* FavoriteMovies.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E21EFA0025449D37004CAEB2 /* FavoriteMovies.xcdatamodeld */; };
 		E2DC6B672543457C008FE70C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC6B662543457C008FE70C /* AppDelegate.swift */; };
 		E2DC6B692543457C008FE70C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC6B682543457C008FE70C /* SceneDelegate.swift */; };
 		E2DC6B6B2543457C008FE70C /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC6B6A2543457C008FE70C /* MovieListViewController.swift */; };
@@ -41,6 +43,8 @@
 		E21EF9F325435669004CAEB2 /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		E21EF9F7254391F1004CAEB2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		E21EF9F925439481004CAEB2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E21EF9FB25445F0D004CAEB2 /* Modals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modals.swift; sourceTree = "<group>"; };
+		E21EFA0125449D37004CAEB2 /* FavoriteMovies.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteMovies.xcdatamodel; sourceTree = "<group>"; };
 		E2DC6B632543457C008FE70C /* iOSMovieApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSMovieApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2DC6B662543457C008FE70C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2DC6B682543457C008FE70C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +119,8 @@
 				E21EF9F325435669004CAEB2 /* MovieCollectionViewCell.swift */,
 				E21EF9F7254391F1004CAEB2 /* Extensions.swift */,
 				E21EF9F925439481004CAEB2 /* Constants.swift */,
+				E21EF9FB25445F0D004CAEB2 /* Modals.swift */,
+				E21EFA0025449D37004CAEB2 /* FavoriteMovies.xcdatamodeld */,
 			);
 			path = iOSMovieApp;
 			sourceTree = "<group>";
@@ -271,8 +277,10 @@
 				E2DC6B6B2543457C008FE70C /* MovieListViewController.swift in Sources */,
 				E21EF9F425435669004CAEB2 /* MovieCollectionViewCell.swift in Sources */,
 				E21EF9F8254391F1004CAEB2 /* Extensions.swift in Sources */,
+				E21EF9FC25445F0D004CAEB2 /* Modals.swift in Sources */,
 				E2DC6B672543457C008FE70C /* AppDelegate.swift in Sources */,
 				E2DC6B692543457C008FE70C /* SceneDelegate.swift in Sources */,
+				E21EFA0225449D37004CAEB2 /* FavoriteMovies.xcdatamodeld in Sources */,
 				E21EF9FA25439481004CAEB2 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -596,6 +604,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E21EFA0025449D37004CAEB2 /* FavoriteMovies.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E21EFA0125449D37004CAEB2 /* FavoriteMovies.xcdatamodel */,
+			);
+			currentVersion = E21EFA0125449D37004CAEB2 /* FavoriteMovies.xcdatamodel */;
+			path = FavoriteMovies.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E2DC6B5B2543457C008FE70C /* Project object */;
 }
