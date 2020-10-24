@@ -41,17 +41,10 @@ class MovieListViewController: UIViewController {
     var movieImageRatio = CGFloat(0.570)
     var moviePageWillLoad = 1
     var movieList = [Movie]()
-    var favoriteMovies: [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMovies(page: moviePageWillLoad)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        fetchFavoriteMovies()
     }
     
     func swapCurrentView() {
@@ -110,27 +103,11 @@ class MovieListViewController: UIViewController {
         }.resume()
     }
     
-    func fetchFavoriteMovies() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteMovie")
-        do {
-            favoriteMovies = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
     @objc
     func favoriteMovieTap(sender: FavoriteUITapGestureRecognizer) {
         guard let movie = sender.movie else { return }
         sender.isFavorited ? movie.removeFromFavorite(): movie.addToFavorite()
         refreshMoviesCollectionView(false)
-    }
-    
-    func isMovieFavorited(movie: Movie) -> Bool {
-        return favoriteMovies.contains(where: { object in object.value(forKey: "id") as? Int == movie.id })
     }
 
 }
