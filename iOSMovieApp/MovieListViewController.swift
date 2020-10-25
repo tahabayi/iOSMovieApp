@@ -19,6 +19,7 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var moviesCollectionView: UICollectionView!
     @IBOutlet weak var moviesChangeViewButton: UIBarButtonItem!
     @IBOutlet weak var loadMoreButton: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBAction func moviesChangeViewTap(_ sender: UIBarButtonItem) {
         moviesChangeViewButton.isEnabled = false
@@ -40,10 +41,21 @@ class MovieListViewController: UIViewController {
     var moviesCollectionColumnNumber = CGFloat(1)
     var movieImageRatio = CGFloat(0.570)
     var moviePageWillLoad = 1
-    var movieList = [Movie]()
+    var movieList = [Movie]() {
+        didSet {
+            filterMovies()
+        }
+    }
+    var movieListFiltered = [Movie]() {
+        didSet {
+            refreshMoviesCollectionView()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         loadMovies(page: moviePageWillLoad)
     }
     
@@ -55,22 +67,29 @@ class MovieListViewController: UIViewController {
         if newView == .list {
             movieImageRatio = CGFloat(0.570)
             moviesCollectionColumnNumber = CGFloat(1)
-            refreshMoviesCollectionView()
             moviesChangeViewButton.image = UIImage(named: "view-grid")
         } else {
             movieImageRatio = CGFloat(1.5)
             moviesCollectionColumnNumber = CGFloat(2)
-            refreshMoviesCollectionView()
             moviesChangeViewButton.image = UIImage(named: "view-list")
+        }
+        refreshMoviesCollectionView()
+    }
+    
+    func filterMovies() {
+        DispatchQueue.main.async() {
+            self.movieListFiltered = self.movieList.filter({ movie in
+                guard let text = self.searchBar.text else { return true }
+                guard text != "" else { return true }
+                return movie.title.lowercased().contains(text.lowercased())
+            })
         }
     }
     
-    func refreshMoviesCollectionView(_ layoutIfNeeded: Bool=true) {
+    func refreshMoviesCollectionView() {
         DispatchQueue.main.async() {
             self.moviesCollectionView.reloadData()
-            if layoutIfNeeded {
-                self.moviesCollectionView.layoutIfNeeded()
-            }
+            self.moviesCollectionView.layoutIfNeeded()
         }
     }
     
@@ -94,7 +113,7 @@ class MovieListViewController: UIViewController {
                 let decoder = JSONDecoder()
                 let moviesListResponse = try decoder.decode(MoviesListResponse.self, from: data)
                 self.movieList.append(contentsOf: moviesListResponse.results)
-                self.refreshMoviesCollectionView(false)
+                self.refreshMoviesCollectionView()
                 self.moviePageWillLoad += 1
             }
             catch let error {
@@ -107,7 +126,13 @@ class MovieListViewController: UIViewController {
     func favoriteMovieTap(sender: FavoriteUITapGestureRecognizer) {
         guard let movie = sender.movie else { return }
         sender.isFavorited ? movie.removeFromFavorite(): movie.addToFavorite()
-        refreshMoviesCollectionView(false)
+        refreshMoviesCollectionView()
+    }
+    
+    @objc
+    func dismissKeyboard(sender: UITapGestureRecognizer) {
+        searchBar.endEditing(true)
+        resignFirstResponder()
     }
 
 }
@@ -115,7 +140,7 @@ class MovieListViewController: UIViewController {
 extension MovieListViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movieList.count
+        movieListFiltered.count
     }
     
     func configure(cell: MovieCollectionViewCell, for movie: Movie) {
@@ -125,17 +150,18 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout, UICollect
         let imageURLStr = currentView == .grid ? movie.posterPath : movie.backdropPath
         cell.movieImageView.downloaded(from: Constants.getMovieImageURL(with: imageURLStr))
         // set favorite button
-        let imageName = movie.isFavorited() ? "star.fill" : "star"
-        cell.movieFavoriteButton.setImage(UIImage(systemName: imageName), for: .normal)
+        let isFavorited = movie.isFavorited()
+        let imageName: FavoriteImageName = isFavorited ? .favorited : .unFavorited
+        cell.movieFavoriteButton.setImage(UIImage(systemName: imageName.rawValue), for: .normal)
         let favoriteTapGestureRecognizer = FavoriteUITapGestureRecognizer(target: self, action: #selector(favoriteMovieTap))
         favoriteTapGestureRecognizer.movie = movie
-        favoriteTapGestureRecognizer.isFavorited = movie.isFavorited()
+        favoriteTapGestureRecognizer.isFavorited = isFavorited
         cell.movieFavoriteButton.addGestureRecognizer(favoriteTapGestureRecognizer)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCollectionViewCell
-        let movie = movieList[indexPath.item]
+        let movie = movieListFiltered[indexPath.item]
         configure(cell: cell, for: movie)
         return cell
     }
@@ -168,6 +194,18 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout, UICollect
         UIView.animate(withDuration: 0.5, animations: {
             cell?.transform = .identity
         })
+    }
+    
+}
+
+extension MovieListViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterMovies()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
     }
     
 }

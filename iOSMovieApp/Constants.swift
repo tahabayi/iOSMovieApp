@@ -23,3 +23,8 @@ class Constants {
     }
     
 }
+
+enum FavoriteImageName: String {
+    case favorited = "star.fill"
+    case unFavorited = "star"
+}
