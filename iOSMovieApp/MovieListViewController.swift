@@ -55,7 +55,6 @@ class MovieListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
         loadMovies(page: moviePageWillLoad)
     }
     

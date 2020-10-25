@@ -27,9 +27,10 @@ class Movie: Codable {
     var posterPath: String
     var backdropPath: String
     var voteCount: Int
+    var overview: String
     
     enum CodingKeys: String, CodingKey {
-        case id, title, posterPath="poster_path", backdropPath="backdrop_path", voteCount="vote_count"
+        case id, title, posterPath="poster_path", backdropPath="backdrop_path", voteCount="vote_count", overview
     }
     
     func addToFavorite() {
