@@ -58,6 +58,12 @@ class MovieListViewController: UIViewController {
         loadMovies(page: moviePageWillLoad)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        refreshMoviesCollectionView()
+    }
+    
     func swapCurrentView() {
         currentView = currentView == .grid ? .list : .grid
     }
@@ -133,6 +139,17 @@ class MovieListViewController: UIViewController {
         searchBar.endEditing(true)
         resignFirstResponder()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        if let cell = sender as? UICollectionViewCell, let indexPath = self.moviesCollectionView.indexPath(for: cell) {
+            let movie = movieListFiltered[indexPath.row]
+            
+            guard let movieDetailViewController = segue.destination as? MovieDetailViewController else { return }
+            movieDetailViewController.movie = movie
+        }
+    }
 
 }
 
@@ -147,20 +164,18 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout, UICollect
         cell.movieLabel.text = movie.title
         // set image
         let imageURLStr = currentView == .grid ? movie.posterPath : movie.backdropPath
-        cell.movieImageView.downloaded(from: Constants.getMovieImageURL(with: imageURLStr))
+        cell.movieImageView.urlStr = Constants.getMovieImageURL(with: imageURLStr)
         // set favorite button
-        let isFavorited = movie.isFavorited()
-        let imageName: FavoriteImageName = isFavorited ? .favorited : .unFavorited
-        cell.movieFavoriteButton.setImage(UIImage(systemName: imageName.rawValue), for: .normal)
+        cell.movieFavoriteButton.setImage(Constants.getFavoritedImage(favorited: movie.isFavorited()), for: .normal)
         let favoriteTapGestureRecognizer = FavoriteUITapGestureRecognizer(target: self, action: #selector(favoriteMovieTap))
         favoriteTapGestureRecognizer.movie = movie
-        favoriteTapGestureRecognizer.isFavorited = isFavorited
+        favoriteTapGestureRecognizer.isFavorited = movie.isFavorited()
         cell.movieFavoriteButton.addGestureRecognizer(favoriteTapGestureRecognizer)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "movieCell", for: indexPath) as! MovieCollectionViewCell
-        let movie = movieListFiltered[indexPath.item]
+        let movie = movieListFiltered[indexPath.row]
         configure(cell: cell, for: movie)
         return cell
     }

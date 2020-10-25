@@ -11,7 +11,7 @@ import UIKit
 class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var movieFavoriteButton: UIBarButtonItem!
-    @IBOutlet weak var movieImageView: UIImageView!
+    @IBOutlet weak var movieImageView: AsyncImageView!
     @IBOutlet weak var movieTitleLabel: UILabel!
     @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var movieDescriptionTextView: UITextView!
@@ -20,8 +20,28 @@ class MovieDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        movieFavoriteButton.image = Constants.getFavoritedImage(favorited: movie?.isFavorited())
+        
+        if let backdropPath = movie?.backdropPath {
+            movieImageView.urlStr = Constants.getMovieImageURL(with: backdropPath)
+        }
+        
+        movieTitleLabel.text = movie?.title
+        
+        if let voteCount = movie?.voteCount {
+            voteCountLabel.text = String(voteCount)
+        }
+        movieDescriptionTextView.text = movie?.overview
+        
+        movieFavoriteButton.action = #selector(favoriteMovieTap)
+        movieFavoriteButton.target = self
+    }
+    
+    @objc
+    func favoriteMovieTap(sender: FavoriteUITapGestureRecognizer) {
+        (movie?.isFavorited() ?? false) ? movie?.removeFromFavorite(): movie?.addToFavorite()
+        movieFavoriteButton.image = Constants.getFavoritedImage(favorited: movie?.isFavorited())
     }
 
 }

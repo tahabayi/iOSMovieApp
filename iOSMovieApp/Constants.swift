@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class Constants {
     
@@ -22,9 +23,8 @@ class Constants {
         return movieImageURL + parameter
     }
     
-}
-
-enum FavoriteImageName: String {
-    case favorited = "star.fill"
-    case unFavorited = "star"
+    static func getFavoritedImage(favorited: Bool?) -> UIImage? {
+        return UIImage(systemName: (favorited ?? false) ? "star.fill" : "star")
+    }
+    
 }

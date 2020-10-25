@@ -10,12 +10,25 @@ import UIKit
 
 let imageCache = NSCache<NSString, UIImage>()
 
-extension UIImageView {
+class AsyncImageView: UIImageView {
+    
+    var urlStr: String? {
+        didSet {
+            if let link = urlStr {
+                downloaded(from: link)
+            }
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        image = UIImage(named: "image-placeholder")
+    }
     
     func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         guard let url = URL(string: link) else { return }
         image = UIImage(named: "image-placeholder")
-        if let imageFromCache = imageCache.object(forKey: link as NSString) {
+        if let imageFromCache = imageCache.object(forKey: link as NSString), link == urlStr {
             self.image = imageFromCache
             return
         }
@@ -28,10 +41,12 @@ extension UIImageView {
                 let image = UIImage(data: data)
                 else { return }
                 imageCache.setObject(image, forKey: link as NSString)
-            DispatchQueue.main.async() { [weak self] in
-                self?.image = image
+            DispatchQueue.main.async() {
+                if link == self.urlStr {
+                    self.image = image
+                }
             }
         }.resume()
     }
-    
+
 }
