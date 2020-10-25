@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MovieListViewController.swift
 //  iOSMovieApp
 //
 //  Created by Taha Metin Bayi on 23.10.2020.

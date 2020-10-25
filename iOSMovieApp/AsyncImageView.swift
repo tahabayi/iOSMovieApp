@@ -1,5 +1,5 @@
 //
-//  CachedImageView.swift
+//  AsyncImageView.swift
 //  iOSMovieApp
 //
 //  Created by Taha Metin Bayi on 24.10.2020.
